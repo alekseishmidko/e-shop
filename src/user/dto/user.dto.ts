@@ -1,4 +1,4 @@
-import { IsOptional, IsString, MinLength } from 'class-validator';
+import { IsEmail, IsOptional, IsString, MinLength } from 'class-validator';
 
 export class UserDto {
   @IsOptional()
@@ -15,4 +15,7 @@ export class UserDto {
   @IsOptional()
   @IsString()
   avatarPath: string;
+  @IsOptional()
+  @IsEmail()
+  email: string;
 }
