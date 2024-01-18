@@ -10,6 +10,6 @@ export const returnFavoritesOfUserObject = {
   id: true,
   name: true,
   slug: true,
-  price: true,
+  // price: true,
   images: true,
 };

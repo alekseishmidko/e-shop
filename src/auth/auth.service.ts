@@ -10,7 +10,6 @@ import { faker } from '@faker-js/faker';
 import { hash, verify } from 'argon2';
 import { JwtService } from '@nestjs/jwt';
 import { User } from '@prisma/client';
-import { RefreshTokenDto } from './dto/refresh-token.dto';
 
 @Injectable()
 export class AuthService {
@@ -54,8 +53,8 @@ export class AuthService {
 
   private async issueTokens(userId: number) {
     const data = { id: userId };
-    const accessToken = this.jwt.sign(data, { expiresIn: '1h' });
-    const refreshToken = this.jwt.sign(data, { expiresIn: '7d' });
+    const accessToken = this.jwt.sign(data, { expiresIn: '12h' });
+    const refreshToken = this.jwt.sign(data, { expiresIn: '10d' });
     return { accessToken, refreshToken };
   }
 

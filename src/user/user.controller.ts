@@ -25,9 +25,10 @@ export class UserController {
 
   @UsePipes(new ValidationPipe())
   @HttpCode(200)
+  @Auth()
   @Put('profile')
-  async updateProfile(@Body() @CurrentUser('id') id: number, dto: UserDto) {
-    return this.userService.updateProfile(id, dto);
+  async updateProfile(@CurrentUser('id') id: number, dto: UserDto) {
+    return this.userService.updateProfile(+id, dto);
   }
 
   @HttpCode(200)
