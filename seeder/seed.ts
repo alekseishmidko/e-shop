@@ -2,7 +2,6 @@ import { faker } from '@faker-js/faker';
 import { PrismaClient, Product } from '@prisma/client';
 import * as dotenv from 'dotenv';
 
-import { getRandomNumber } from 'src/utils/random-number';
 dotenv.config();
 const prisma = new PrismaClient();
 const createProduct = async (quantity: number) => {
@@ -15,8 +14,11 @@ const createProduct = async (quantity: number) => {
         name: productName,
         slug: faker.helpers.slugify(productName),
         description: faker.commerce.productDescription(),
-        price: +faker.commerce.price(10, 999, 0),
-        images: Array.from({ length: getRandomNumber(2, 6) }).map((item) => {
+        price: +faker.commerce.price({ min: 10, max: 999, dec: 0 }),
+        user: { connect: { id: 1 } },
+        images: Array.from({
+          length: faker.number.int({ min: 2, max: 4 }),
+        }).map((item) => {
           return faker.image.urlPicsumPhotos();
         }),
         category: {
@@ -41,6 +43,8 @@ const createProduct = async (quantity: number) => {
         },
       },
     });
+    console.log(product);
+    products.push(product);
   }
   console.log(`created ${products.length} prods`);
 };

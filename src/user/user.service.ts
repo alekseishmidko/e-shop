@@ -46,17 +46,20 @@ export class UserService {
       },
     });
   }
-  async toggleFavourites(productId: number, id: number) {
-    const user = await this.getProfile(id);
+  async toggleFavourites(productId: number, userId: number) {
+    console.log(productId, 'productId');
+    const user = await this.getProfile(userId);
     if (!user) throw new NotFoundException('Dont find a user!');
-
     const isExists = user.favorites.some((item) => item.id === productId);
-    await this.prisma.user.update({
-      where: { id: user.id },
-      data: {
-        favorites: { [isExists ? 'disconnect' : 'connect']: { id: productId } },
-      },
-    });
+    console.log(user);
+    // await this.prisma.user.update({
+    //   where: { id: userId },
+    //   data: {
+    //     favorites: isExists
+    //       ? { disconnect: { id: productId } }
+    //       : { connect: { id: productId } },
+    //   },
+    // });
     return 'success';
   }
 }
